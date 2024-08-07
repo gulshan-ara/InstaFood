@@ -1,8 +1,11 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+
 // create a react element - means the h1 or other html tags
 const heading = React.createElement(
   "h1",
   { id: "heading" },
-  "Hello world from React"
+  "Hello world from React - 101"
 );
 
 // nested react elements for nested tags
