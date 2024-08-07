@@ -1,0 +1,23 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "This is a react in depth journey",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gulshan-ara/react-in-depth.git"
+  },
+  "keywords": [],
+  "author": "Gulshan Ara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gulshan-ara/react-in-depth/issues"
+  },
+  "homepage": "https://github.com/gulshan-ara/react-in-depth#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
