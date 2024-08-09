@@ -2,8 +2,10 @@
   "name": "react",
   "version": "1.0.0",
   "description": "This is a react in depth journey",
-  "main": "App.js",
+  
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
