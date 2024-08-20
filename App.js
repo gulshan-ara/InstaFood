@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { resData } from "./resData";
 
 // const heading = React.createElement("h1", {}, "Hello World");
 /**
@@ -40,19 +41,22 @@ const Header = () => {
   );
 };
 
-const RestaurantCard = () => {
+const RestaurantCard = (props) => {
+  const { resInfo } = props;
+
   return (
     <div className="res-card">
       <img
         className="res-card-logo"
-        src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/fhrunldultsj6hvo7wdo"
+        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${resInfo.info.cloudinaryImageId}`}
         alt="image"
       />
       <div className="res-card-info">
-        <h3 className="res-card-title">Meghna Foods</h3>
-        <p className="res-card-rating">⭐️ 4.8 * 20-25mins</p>
-        <p>Sweets, Ice Cream</p>
-        <p>Navrangpura</p>
+        <h3 className="res-card-title">{resInfo.info.name}</h3>
+        <p className="res-card-rating">
+          ⭐️ {resInfo.info.avgRatingString} - {resInfo.info.sla.slaString}
+        </p>
+        <p>{resInfo.info.cuisines.join(", ")}</p>
       </div>
     </div>
   );
@@ -65,15 +69,9 @@ const RestaurantContainer = () => {
         <input className="search" placeholder="Search for Restaurants..." />
       </div>
       <div className="res-container">
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
-        <RestaurantCard />
+        {resData.map((i) => {
+          return <RestaurantCard key={i.info.id} resInfo={i} />;
+        })}
       </div>
     </div>
   );
