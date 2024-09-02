@@ -5,8 +5,6 @@ export const resData = [
       name: "Ovenfresh Cakes And Desserts",
       cloudinaryImageId:
         "RX_THUMBNAIL/IMAGES/VENDOR/2024/8/18/67078007-3e55-40c4-b456-a535d387634b_693252.jpg",
-      locality: "NR. PANCHVAT CIRCLE",
-      areaName: "Vastrapur",
       costForTwo: "₹200 for two",
       cuisines: [
         "Bakery",
@@ -19,59 +17,9 @@ export const resData = [
         "Pizzas",
       ],
       avgRating: 4.3,
-      veg: true,
-      parentId: "1372",
-      avgRatingString: "4.3",
-      totalRatingsString: "100+",
       sla: {
-        deliveryTime: 36,
-        lastMileTravel: 1.9,
-        serviceability: "SERVICEABLE",
         slaString: "35-40 mins",
-        lastMileTravelString: "1.9 km",
-        iconType: "ICON_TYPE_EMPTY",
       },
-      availability: {
-        nextCloseTime: "2024-08-21 01:00:00",
-        opened: true,
-      },
-      badges: {},
-      isOpen: true,
-      type: "F",
-      badgesV2: {
-        entityBadges: {
-          imageBased: {},
-          textBased: {},
-          textExtendedBadges: {},
-        },
-      },
-      aggregatedDiscountInfoV3: {
-        header: "60% OFF",
-        subHeader: "UPTO ₹120",
-      },
-      differentiatedUi: {
-        displayType: "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
-        differentiatedUiMediaDetails: {
-          mediaType: "ADS_MEDIA_ENUM_IMAGE",
-          lottie: {},
-          video: {},
-        },
-      },
-      reviewsSummary: {},
-      displayType: "RESTAURANT_DISPLAY_TYPE_DEFAULT",
-      restaurantOfferPresentationInfo: {},
-      externalRatings: {
-        aggregatedRating: {
-          rating: "--",
-        },
-      },
-      ratingsDisplayPreference: "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY",
-    },
-    analytics: {},
-    cta: {
-      link:
-        "https://www.swiggy.com/restaurants/ovenfresh-cakes-and-desserts-nr-panchvat-circle-vastrapur-ahmedabad-693252",
-      type: "WEBLINK",
     },
   },
   {
