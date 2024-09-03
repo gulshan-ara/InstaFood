@@ -4,6 +4,8 @@ import ShimmerUI from "./Shimmer";
 
 const RestaurantContainer = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredfRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -19,6 +21,10 @@ const RestaurantContainer = () => {
       jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants
     );
+    setFilteredRestaurants(
+      jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
   };
 
   // Conditional Rendering
@@ -29,7 +35,22 @@ const RestaurantContainer = () => {
   return (
     <div className="body-container">
       <div className="search-container">
-        <input className="search" placeholder="Search for Restaurants..." />
+        <input
+          className="search"
+          placeholder="Search for Restaurants..."
+          value={searchText}
+          onChange={(txt) => setSearchText(txt.target.value)}
+        />
+        <button
+          onClick={() => {
+            const filteredR = listOfRestaurants.filter((res) =>
+              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+            );
+            setFilteredRestaurants(filteredR);
+          }}
+        >
+          Search
+        </button>
       </div>
       <button
         className="filter-btn"
@@ -37,13 +58,13 @@ const RestaurantContainer = () => {
           const filteredRest = listOfRestaurants.filter(
             (res) => res.info.avgRating > 4.5
           );
-          setListOfRestaurants(filteredRest);
+          setFilteredRestaurants(filteredRest);
         }}
       >
         Top Rated Restaurants
       </button>
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => {
+        {filteredfRestaurants.map((restaurant) => {
           return (
             <RestaurantCard key={restaurant.info.id} resInfo={restaurant} />
           );
