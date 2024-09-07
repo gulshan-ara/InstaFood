@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import ResMenu from "./components/ResMenu";
 
 // const heading = React.createElement("h1", {}, "Hello World");
 /**
@@ -50,6 +51,11 @@ const appRouter = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        // :resId - dynamic value of restaurant id
+        path: "/restaurants/:resId",
+        element: <ResMenu />,
       },
     ],
     errorElement: <Error />,
