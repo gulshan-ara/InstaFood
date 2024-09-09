@@ -26,8 +26,10 @@ const ResMenu = () => {
 
   const resData = resInfo.data?.cards[2]?.card?.card?.info;
   const itemCards =
-    resInfo.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+    resInfo.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
       ?.card?.itemCards;
+
+  console.log(itemCards, "new");
 
   return (
     <div className="menu">
