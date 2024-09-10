@@ -1,24 +1,10 @@
-import { useEffect, useState } from "react";
 import ShimmerUI from "./Shimmer";
 import { useParams } from "react-router-dom";
+import useRestaurantMenu from "../hooks/useRestaurantMenu";
 
 const ResMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
   const { resId } = useParams();
-
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  const fetchMenu = async () => {
-    const data = await fetch(
-      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=23.022505&lng=72.5713621&restaurantId=" +
-        resId
-    );
-
-    const json = await data.json();
-    setResInfo(json);
-  };
+  const resInfo = useRestaurantMenu(resId);
 
   if (resInfo === null) {
     return <ShimmerUI />;
