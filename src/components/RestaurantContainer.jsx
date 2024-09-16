@@ -40,37 +40,40 @@ const RestaurantContainer = () => {
   }
 
   return (
-    <div className="body-container">
-      <div className="search-container">
-        <input
-          className="search"
-          placeholder="Search for Restaurants..."
-          value={searchText}
-          onChange={(txt) => setSearchText(txt.target.value)}
-        />
+    <div className="mx-10">
+      <div className="flex justify-between m-10">
+        <div className="flex justify-between">
+          <input
+            className="mx-10 rounded-3xl px-4 py-4 w-96 h-12"
+            placeholder="Search for Restaurants..."
+            value={searchText}
+            onChange={(txt) => setSearchText(txt.target.value)}
+          />
+          <button
+            className="bg-blue-300 px-10 rounded-full h-12 font-semibold"
+            onClick={() => {
+              const filteredR = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredRestaurants(filteredR);
+            }}
+          >
+            Search
+          </button>
+        </div>
         <button
+          className="bg-lime-500 px-10 rounded-full h-12 font-semibold"
           onClick={() => {
-            const filteredR = listOfRestaurants.filter((res) =>
-              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+            const filteredRest = listOfRestaurants.filter(
+              (res) => res.info.avgRating > 4.5
             );
-            setFilteredRestaurants(filteredR);
+            setFilteredRestaurants(filteredRest);
           }}
         >
-          Search
+          Top Rated Restaurants
         </button>
       </div>
-      <button
-        className="filter-btn"
-        onClick={() => {
-          const filteredRest = listOfRestaurants.filter(
-            (res) => res.info.avgRating > 4.5
-          );
-          setFilteredRestaurants(filteredRest);
-        }}
-      >
-        Top Rated Restaurants
-      </button>
-      <div className="res-container">
+      <div className="flex flex-row flex-wrap justify-between align-middle">
         {filteredfRestaurants.map((restaurant) => {
           return (
             <Link
