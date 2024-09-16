@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withVegLabel } from "./RestaurantCard";
 import ShimmerUI from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
@@ -8,6 +8,7 @@ const RestaurantContainer = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredfRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const VegResCard = withVegLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -35,7 +36,7 @@ const RestaurantContainer = () => {
     return <h1>Please check your internet connection!</h1>;
   }
   // Conditional Rendering
-  if (listOfRestaurants.length === 0) {
+  if (listOfRestaurants == []) {
     return <ShimmerUI />;
   }
 
@@ -80,7 +81,11 @@ const RestaurantContainer = () => {
               key={restaurant.info.id}
               to={"/restaurants/" + restaurant.info.id}
             >
-              <RestaurantCard resInfo={restaurant} />
+              {restaurant.info.veg ? (
+                <VegResCard resInfo={restaurant} />
+              ) : (
+                <RestaurantCard resInfo={restaurant} />
+              )}
             </Link>
           );
         })}
