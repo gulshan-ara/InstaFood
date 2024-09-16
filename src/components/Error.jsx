@@ -6,10 +6,10 @@ const Error = () => {
   console.log(err);
 
   return (
-    <div>
-      <h1>Oops!!</h1>
-      <h2>Something went wrong</h2>
-      <h3>
+    <div className="m-10">
+      <h1 className="text-lg font-bold">Oops!!</h1>
+      <h2 className="text-lg font-bold">Something went wrong</h2>
+      <h3 className="text-lg font-medium">
         {err.status} : {err.statusText}
       </h3>
     </div>

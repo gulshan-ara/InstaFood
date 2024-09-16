@@ -5,7 +5,7 @@ const RestaurantCard = (props) => {
   const { cloudinaryImageId, name, avgRating, sla, cuisines } = resInfo?.info;
 
   return (
-    <div className="flex flex-col flex-wrap w-64 h-96 mx-15 my-4 p-4 shadow-xl rounded-lg hover:bg-gray-200">
+    <div className="flex flex-col flex-wrap w-64 h-96 mx-2 my-4 p-4 shadow-xl rounded-lg hover:bg-gray-200">
       <img
         className="w-64 h-48 rounded-md mx-auto"
         src={CDN_URL + cloudinaryImageId}

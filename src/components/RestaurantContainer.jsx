@@ -44,7 +44,7 @@ const RestaurantContainer = () => {
       <div className="flex justify-between m-10">
         <div className="flex justify-between">
           <input
-            className="mx-10 rounded-3xl px-4 py-4 w-96 h-12"
+            className="mx-10 rounded-3xl px-4 py-4 w-96 h-12 border border-slate-400"
             placeholder="Search for Restaurants..."
             value={searchText}
             onChange={(txt) => setSearchText(txt.target.value)}
@@ -73,7 +73,7 @@ const RestaurantContainer = () => {
           Top Rated Restaurants
         </button>
       </div>
-      <div className="flex flex-row flex-wrap justify-between align-middle">
+      <div className="flex flex-row flex-wrap justify-center align-middle">
         {filteredfRestaurants.map((restaurant) => {
           return (
             <Link
