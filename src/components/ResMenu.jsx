@@ -46,7 +46,7 @@ const ResMenu = () => {
           })}
       </ul> */}
       {categories.map((item) => {
-        return <ResCategory key={item.card?.card?.id} data={item.card?.card} />;
+        return <ResCategory key={item.card?.card?.title} data={item.card?.card} />;
       })}
     </div>
   );

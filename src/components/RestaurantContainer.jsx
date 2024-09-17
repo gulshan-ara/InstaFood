@@ -75,7 +75,7 @@ const RestaurantContainer = () => {
         </button>
       </div>
       <div className="flex flex-row flex-wrap justify-center align-middle">
-        {filteredfRestaurants.map((restaurant) => {
+        {filteredfRestaurants !== undefined && filteredfRestaurants.map((restaurant) => {
           return (
             <Link
               key={restaurant.info.id}
