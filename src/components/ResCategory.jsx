@@ -1,10 +1,10 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
 
-const ResCategory = ({ data }) => {
-  const [showItems, setShowItems] = useState(false);
+const ResCategory = ({ data, showItem, setExpandedItemIndex }) => {
+  // lifting state up and turning it into controlled component
   const handleClick = () => {
-    setShowItems(!showItems);
+    setExpandedItemIndex();
   };
 
   return (
@@ -15,7 +15,7 @@ const ResCategory = ({ data }) => {
         </span>
         <span className="font-semibold text-lg">v</span>
       </div>
-      {showItems && <ItemList items={data.itemCards} />}
+      {showItem && <ItemList items={data.itemCards} />}
     </div>
   );
 };

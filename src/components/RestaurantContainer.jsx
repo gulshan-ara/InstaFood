@@ -16,7 +16,7 @@ const RestaurantContainer = () => {
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.9615398&lng=79.2961468&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const jsonVal = await data.json();
     // Optional Chaining
@@ -35,6 +35,7 @@ const RestaurantContainer = () => {
   if (onlineStatus === false) {
     return <h1>Please check your internet connection!</h1>;
   }
+
   // Conditional Rendering
   if (listOfRestaurants == []) {
     return <ShimmerUI />;
@@ -75,20 +76,21 @@ const RestaurantContainer = () => {
         </button>
       </div>
       <div className="flex flex-row flex-wrap justify-center align-middle">
-        {filteredfRestaurants !== undefined && filteredfRestaurants.map((restaurant) => {
-          return (
-            <Link
-              key={restaurant.info.id}
-              to={"/restaurants/" + restaurant.info.id}
-            >
-              {restaurant.info.veg ? (
-                <VegResCard resInfo={restaurant} />
-              ) : (
-                <RestaurantCard resInfo={restaurant} />
-              )}
-            </Link>
-          );
-        })}
+        {filteredfRestaurants != undefined &&
+          filteredfRestaurants.map((restaurant) => {
+            return (
+              <Link
+                key={restaurant.info.id}
+                to={"/restaurants/" + restaurant.info.id}
+              >
+                {restaurant.info.veg ? (
+                  <VegResCard resInfo={restaurant} />
+                ) : (
+                  <RestaurantCard resInfo={restaurant} />
+                )}
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

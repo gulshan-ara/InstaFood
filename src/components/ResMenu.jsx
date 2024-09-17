@@ -2,10 +2,12 @@ import ShimmerUI from "./Shimmer";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../hooks/useRestaurantMenu";
 import ResCategory from "./ResCategory";
+import { useState } from "react";
 
 const ResMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
+  const [expandedItemIndex, setExpandedItemIndex] = useState(0);
 
   if (resInfo === null || resInfo === undefined) {
     return <ShimmerUI />;
@@ -45,8 +47,15 @@ const ResMenu = () => {
             );
           })}
       </ul> */}
-      {categories.map((item) => {
-        return <ResCategory key={item.card?.card?.title} data={item.card?.card} />;
+      {categories.map((item, index) => {
+        return (
+          <ResCategory
+            key={item.card?.card?.title}
+            data={item.card?.card}
+            showItem={index === expandedItemIndex ? true : false}
+            setExpandedItemIndex={() => setExpandedItemIndex(index)}
+          />
+        );
       })}
     </div>
   );
