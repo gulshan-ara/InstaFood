@@ -7,7 +7,7 @@ import { useState } from "react";
 const ResMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
-  const [expandedItemIndex, setExpandedItemIndex] = useState(0);
+  const [expandedItemIndex, setExpandedItemIndex] = useState(null);
 
   if (resInfo === null || resInfo === undefined) {
     return <ShimmerUI />;

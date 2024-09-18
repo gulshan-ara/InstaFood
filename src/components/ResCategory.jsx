@@ -13,7 +13,7 @@ const ResCategory = ({ data, showItem, setExpandedItemIndex }) => {
         <span className="font-semibold text-lg">
           {data.title} ({data.itemCards.length})
         </span>
-        <span className="font-semibold text-lg">v</span>
+        <span className="font-semibold text-lg text-black">⬇</span>
       </div>
       {showItem && <ItemList items={data.itemCards} />}
     </div>

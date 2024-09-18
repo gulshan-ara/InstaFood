@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const RestaurantContainer = () => {
-  const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [listOfRestaurants, setListOfRestaurants] = useState(null);
   const [filteredfRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   const VegResCard = withVegLabel(RestaurantCard);
@@ -37,7 +37,7 @@ const RestaurantContainer = () => {
   }
 
   // Conditional Rendering
-  if (listOfRestaurants == []) {
+  if (listOfRestaurants === undefined  || listOfRestaurants === null) {
     return <ShimmerUI />;
   }
 

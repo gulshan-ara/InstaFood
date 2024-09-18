@@ -16,7 +16,7 @@ const RestaurantCard = (props) => {
         <p className="font-medium my-1">
           ⭐️ {avgRating} - {sla.slaString}
         </p>
-        <p className="text-justify">{cuisines.join(", ")}</p>
+        <p className="text-gray-500"><span className="text-black">Cuisines : </span> {cuisines.join(", ")}</p>
       </div>
     </div>
   );
