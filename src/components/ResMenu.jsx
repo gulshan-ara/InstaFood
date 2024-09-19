@@ -14,15 +14,15 @@ const ResMenu = () => {
   }
 
   const resData = resInfo.data?.cards[2]?.card?.card?.info;
-  const itemCards =
-    resInfo.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-      ?.card?.itemCards ||
-    resInfo.data?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-      ?.card?.itemCards ||
-    resInfo.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-      ?.card?.itemCards ||
-    resInfo.data?.cards[1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-      ?.card?.itemCards;
+  // const itemCards =
+  //   resInfo.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+  //     ?.card?.itemCards ||
+  //   resInfo.data?.cards[3]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+  //     ?.card?.itemCards ||
+  //   resInfo.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+  //     ?.card?.itemCards ||
+  //   resInfo.data?.cards[1]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+  //     ?.card?.itemCards;
 
   const categories = resInfo.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
     (c) =>
