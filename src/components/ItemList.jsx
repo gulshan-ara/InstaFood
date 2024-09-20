@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { CDN_URL } from "../utils/constants";
-import { addItem } from "../redux/cartSlice";
+import { addItem, removeItem } from "../redux/cartSlice";
 
-const ItemCard = ({ item }) => {
+export const ItemCard = ({ item, isInCart }) => {
   const {
     name,
     description,
@@ -18,10 +18,14 @@ const ItemCard = ({ item }) => {
 
   const dispatch = useDispatch();
 
-  const handleAddItem = (name, price) => {
+  const handleAddItem = (item) => {
     // Dispatch an action
-    dispatch(addItem(name, price));
+    dispatch(addItem(item));
   };
+
+  const handleRemoveItem = (item) => {
+    dispatch(removeItem(item));
+  }
 
   return (
     <div className="bg-white shadow-lg my-4 p-4 rounded-lg">
@@ -30,14 +34,25 @@ const ItemCard = ({ item }) => {
         <div className="mx-4 flex-1">
           <div className="flex  flex-row justify-between">
             <span className="font-medium text-lg">{name}</span>
-            <button
-              className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
-              onClick={() => {
-                handleAddItem(name, itemPrice);
-              }}
-            >
-              Add
-            </button>
+            {isInCart ? (
+              <button
+                className="bg-red-400 text-white px-4 rounded-full h-8 my-auto"
+                onClick={() => {
+                  handleRemoveItem(item);
+                }}
+              >
+                Remove
+              </button>
+            ) : (
+              <button
+                className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
+                onClick={() => {
+                  handleAddItem(item);
+                }}
+              >
+                Add
+              </button>
+            )}
           </div>
           <div>
             <p className="font-semibold text-gray-600">{itemPrice}₹</p>
