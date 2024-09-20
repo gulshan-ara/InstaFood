@@ -11,12 +11,28 @@ const Cart = () => {
   };
 
   return (
-    <div>
-      <h3>Cart Page</h3>
-      {itemInCart.map((item) => {
-        return <ItemCard item={item} isInCart={true} />;
-      })}
-      <button onClick={handleClearCart}>Clear Cart</button>
+    <div className="w-6/12 mx-auto my-8 bg-gray-100 px-4 py-2 shadow-md rounded-lg flex flex-col justify-center">
+      {itemInCart.length === 0 ? (
+        <div>
+          <p className="text-center font-semibold">
+            Nothing in cart yet! Please add items to cart.
+          </p>
+        </div>
+      ) : (
+        itemInCart.map((item) => {
+          return (
+            <ItemCard key={item.card?.info?.id} item={item} isInCart={true} />
+          );
+        })
+      )}
+      {itemInCart.length !== 0 && (
+        <button
+          className="bg-red-400 text-white px-4 py-2 rounded-xl shadow-lg mx-auto"
+          onClick={handleClearCart}
+        >
+          Clear Cart
+        </button>
+      )}
     </div>
   );
 };
