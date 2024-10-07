@@ -12,24 +12,6 @@ import appStore from "./redux/appStore";
 import Cart from "./components/Cart";
 import ShimmerUI from "./components/Shimmer";
 
-// const heading = React.createElement("h1", {}, "Hello World");
-/**
- * Header
- * --- Logo
- * --- Nav Items
- * Body
- * --- Search
- * --- RestaurantContainer
- * --- ReataurantCard
- * -------- Img
- * -------- Name of Res, star rating, cuisine etc
- * Footer
- * --- Copyright
- * --- Links
- * --- Address
- * --- Contact
- */
-
 let About = lazy(() => import("../src/components/About"));
 
 const AppLayout = () => {
