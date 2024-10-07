@@ -30,7 +30,7 @@ import ShimmerUI from "./components/Shimmer";
  * --- Contact
  */
 
-const About = lazy(() => import("../src/components/About"));
+let About = lazy(() => import("../src/components/About"));
 
 const AppLayout = () => {
   return (
