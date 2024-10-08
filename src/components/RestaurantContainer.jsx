@@ -3,7 +3,6 @@ import RestaurantCard, { withVegLabel } from "./RestaurantCard";
 import ShimmerUI from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
-import { userSignOut } from "../utils/firebaseAuth";
 
 const RestaurantContainer = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState(null);
@@ -66,12 +65,11 @@ const RestaurantContainer = () => {
         </div>
         <button
           className="bg-lime-500 px-10 rounded-full h-12 font-semibold"
-          onClick={async () => {
-            // const filteredRest = listOfRestaurants.filter(
-            //   (res) => res.info.avgRating > 4
-            // );
-            // setFilteredRestaurants(filteredRest);
-            await userSignOut();
+          onClick={() => {
+            const filteredRest = listOfRestaurants.filter(
+              (res) => res.info.avgRating > 4
+            );
+            setFilteredRestaurants(filteredRest);
           }}
         >
           Top Rated Restaurants
