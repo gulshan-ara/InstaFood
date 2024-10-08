@@ -1,23 +1,48 @@
 import React, { useState, useRef } from "react";
 import qrCode from "../assets/frame.png";
 import { validateInput } from "../utils/validateInput";
+import { userSignIn, userSignUp } from "../utils/firebaseAuth";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(false);
   const [isPassVisible, setIsPassVisible] = useState(false);
-  const [errorMsg, setErrroMsg] = useState("");
+  const [error, setError] = useState("");
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     const message = validateInput(email.current.value, password.current.value);
-    setErrroMsg(message);
+
+    if (message) {
+      setError(message);
+      return;
+    }
+
+    if (message === null) {
+      try {
+        await userSignIn(email.current.value, password.current.value);
+      } catch (error) {
+        setError(error.message);
+      }
+    }
   };
 
-  const handleSignUp = () => {
-    const message = validateInput(name.current.value, email.current.value, password.current.value);
-    setErrroMsg(message);
+  const handleSignUp = async () => {
+    const message = validateInput(email.current.value, password.current.value);
+
+    if (message) {
+      setError(message);
+      return;
+    }
+
+    if (message === null) {
+      try {
+        await userSignUp(email.current.value, password.current.value);
+      } catch (error) {
+        setError(error.message);
+      }
+    }
   };
 
   return (
@@ -68,7 +93,7 @@ const Login = () => {
             />
             <p>Show Password</p>
           </div>
-          <p className="text-red-500">{errorMsg}</p>
+          <p className="text-red-500">{error}</p>
           {isSignInForm ? (
             <button
               onClick={handleSignIn}
