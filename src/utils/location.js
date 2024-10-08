@@ -1,0 +1,58 @@
+export const locations = [
+  {
+    city: "Ahmedabad",
+    state: "Gujarat",
+    country: "India",
+    lat: 23.022505,
+    lng: 72.5713621,
+  },
+  {
+    city: "Rajkot",
+    state: "Gujarat",
+    country: "India",
+    lat: 22.3038945,
+    lng: 70.80215989999999,
+  },
+  {
+    city: "Dehradun",
+    state: "Uttarakhand",
+    country: "India",
+    lat: 30.3164945,
+    lng: 78.03219179999999,
+  },
+  {
+    city: "Bengaluru",
+    state: "Karnataka",
+    country: "India",
+    lat: 12.9715987,
+    lng: 77.5945627,
+  },
+  {
+    city: "Chennai",
+    state: "Tamil Nadu",
+    country: "India",
+    lat: 13.0843007,
+    lng: 80.2704622,
+  },
+  {
+    city: "Jaipur",
+    state: "Rajasthan",
+    country: "India",
+    lat: 26.9124336,
+    lng: 75.7872709,
+  },
+  {
+    city: "Mumbai",
+    state: "Maharastra",
+    country: "India",
+    lat: 19.0759837,
+    lng: 72.8776559,
+  },
+  {
+    city: "Kolkata",
+    state: "West Bengal",
+    country: "India",
+    lat: 22.5743545,
+    lng: 88.3628734,
+  },
+];
