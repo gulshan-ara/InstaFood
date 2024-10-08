@@ -28,6 +28,11 @@ const Header = () => {
               Cart <sup>({cartData.length}) </sup>
             </Link>
           </li>
+          <li className="px-8 py-4 font-medium text-lg  hover:text-green-800">
+            <Link to="/login">
+              Login
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
