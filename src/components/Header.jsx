@@ -6,7 +6,7 @@ import { userSignOut } from "../utils/firebaseAuth";
 
 const Header = ({ isLoggedIn }) => {
   const cartData = useSelector((store) => store.cart.items);
-  const authData = useSelector((store) => store.auth.email);
+  const authData = useSelector((store) => store.auth?.email) || null;
   const isOnline = useOnlineStatus();
 
   return (
@@ -46,7 +46,9 @@ const Header = ({ isLoggedIn }) => {
         </ul>
         {isLoggedIn && (
           <div className="bg-purple-400 rounded-full px-4 py-2 relative">
-            <p className="text-xl font-bold text-white">{authData[0].toUpperCase()}</p>
+            <p className="text-xl font-bold text-white">
+              {authData && authData[0].toUpperCase()}
+            </p>
             {isOnline ? (
               <span className="bg-green-500 h-3 w-3 rounded-full absolute top-0 right-0 translate-x-1/2 translate-y-1/3"></span>
             ) : (
