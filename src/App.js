@@ -1,7 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
-import RestaurantContainer from "./components/RestaurantContainer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
@@ -15,6 +14,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebaseConfig";
 import { addUser, removeUser } from "./redux/authSlice";
 
+let RestaurantContainer = lazy(() =>
+  import("../src/components/RestaurantContainer")
+);
 let About = lazy(() => import("../src/components/About"));
 let Login = lazy(() => import("../src/components/Login"));
 
@@ -60,7 +62,11 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <RestaurantContainer />,
+        element: (
+          <Suspense fallback={<ShimmerUI />}>
+            <RestaurantContainer />
+          </Suspense>
+        ),
       },
       {
         path: "/about",
@@ -88,6 +94,14 @@ const appRouter = createBrowserRouter([
         element: (
           <Suspense fallback={<ShimmerUI />}>
             <Login />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/city/:city",
+        element: (
+          <Suspense fallback={<ShimmerUI />}>
+            <RestaurantContainer />
           </Suspense>
         ),
       },

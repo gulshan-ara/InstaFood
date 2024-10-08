@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import { userSignOut } from "../utils/firebaseAuth";
+import { locations } from "../utils/location";
+import LocationCard from "./LocationCard";
 
 const Header = ({ isLoggedIn }) => {
   const cartData = useSelector((store) => store.cart.items);
   const authData = useSelector((store) => store.auth?.email) || null;
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedLoc, setSelectedLoc] = useState("Ahmedabad, Gujarat, India");
   const isOnline = useOnlineStatus();
 
   return (
@@ -24,8 +27,8 @@ const Header = ({ isLoggedIn }) => {
           }}
           className="flex flex-row justify-around items-center bg-slate-200 bg-opacity-40 rounded-full shadow-xl px-5 py-5"
         >
-          <p className="mr-3 font-medium">Ahmedabad, Gujarat, India</p>
-          <p className="font-normal text-gray-400 tracking-wider">v</p>
+          <p className="mr-3 font-medium">{selectedLoc}</p>
+          <p className="font-normal text-gray-400 -tracking-widest">v</p>
         </div>
       </div>
       <div className="flex flex-row justify-around items-center px-20">
@@ -84,23 +87,27 @@ const Header = ({ isLoggedIn }) => {
           drawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <h2 className="text-xl font-bold mb-4">Drawer Menu</h2>
+        <h2 className="text-xl font-bold mb-4">Choose a Location</h2>
         <ul>
-          <li className="mb-2">
-            <a href="#" className="hover:underline">
-              Home
-            </a>
-          </li>
-          <li className="mb-2">
-            <a href="#" className="hover:underline">
-              Profile
-            </a>
-          </li>
-          <li className="mb-2">
-            <a href="#" className="hover:underline">
-              Settings
-            </a>
-          </li>
+          {locations.map((loc, index) => {
+            return (
+              <li key={index}>
+                <Link
+                  to={`/city/${loc.city}`}
+                  onClick={() => {
+                    setSelectedLoc(`${loc.city}, ${loc.state}, India`);
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <LocationCard
+                    city={loc.city}
+                    state={loc.state}
+                    country={loc.country}
+                  />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

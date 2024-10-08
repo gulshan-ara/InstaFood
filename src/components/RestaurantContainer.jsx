@@ -1,39 +1,67 @@
 import { useEffect, useState } from "react";
 import RestaurantCard, { withVegLabel } from "./RestaurantCard";
 import ShimmerUI from "./Shimmer";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
+import { locations } from "../utils/location";
 
 const RestaurantContainer = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState(null);
   const [filteredfRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(true);
   const VegResCard = withVegLabel(RestaurantCard);
+  const { city } = useParams();
+  const selectedCity = city || "Ahmedabad";
+
+  const location = locations.find(
+    (loc) => loc.city.toLowerCase() === selectedCity?.toLowerCase()
+  );
+
+  if (!location) {
+    return <div>Location not found</div>;
+  }
+
+  const { lat, lng } = location;
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedCity, location]);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://corsproxy.io/?https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const jsonVal = await data.json();
-    // Optional Chaining
-    setListOfRestaurants(
-      jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-    setFilteredRestaurants(
-      jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
+    if (location) {
+      setLoading(true);
+      const data = await fetch(
+        `https://corsproxy.io/?https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
+      );
+      const jsonVal = await data.json();
+      // Optional Chaining
+      setListOfRestaurants(
+        jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setFilteredRestaurants(
+        jsonVal?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setLoading(false);
+    }
   };
 
   const onlineStatus = useOnlineStatus();
 
   if (onlineStatus === false) {
-    return <h1>Please check your internet connection!</h1>;
+    return (
+      <p className="text-center my-10 font-medium">
+        Please check your internet connection!
+      </p>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="text-center text-xl my-10">Loading restaurants of {city}</div>
+    );
   }
 
   // Conditional Rendering
