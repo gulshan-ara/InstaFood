@@ -60,7 +60,7 @@ const RestaurantContainer = () => {
 
   if (loading) {
     return (
-      <div className="text-center text-xl my-10">Loading restaurants of {city}</div>
+      <div className="text-center text-xl my-10">Loading restaurants of {selectedCity}</div>
     );
   }
 
