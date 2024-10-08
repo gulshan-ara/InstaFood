@@ -10,14 +10,19 @@ import { Provider } from "react-redux";
 import appStore from "./redux/appStore";
 import Cart from "./components/Cart";
 import ShimmerUI from "./components/Shimmer";
+import Login from "./components/Login";
+import { useLocation } from "react-router-dom";
 
 let About = lazy(() => import("../src/components/About"));
 
 const AppLayout = () => {
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
     <Provider store={appStore}>
       <div className="app">
-        <Header />
+        {!isLoginPage && <Header />}
         <Outlet />
       </div>
     </Provider>
@@ -53,6 +58,10 @@ const appRouter = createBrowserRouter([
         // :resId - dynamic value of restaurant id
         path: "/restaurants/:resId",
         element: <ResMenu />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
     ],
     errorElement: <Error />,
