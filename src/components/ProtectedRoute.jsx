@@ -7,7 +7,13 @@ const ProtectedRoute = () => {
     useSelector((state) => state.auth?.isLoggedIn) || false;
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return (
+      <Navigate
+        to="/login"
+        state={{ from: "/cart", isToaster: true }}
+        replace
+      />
+    );
   }
 
   return <Outlet />;
