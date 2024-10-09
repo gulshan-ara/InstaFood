@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebaseConfig";
 import { addUser, removeUser } from "./redux/authSlice";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 let RestaurantContainer = lazy(() =>
   import("../src/components/RestaurantContainer")
@@ -38,7 +39,14 @@ const AppLayout = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            isLoggedIn: isLoggedIn,
+          })
+        );
         setIsLoggedIn(true);
       } else {
         dispatch(removeUser());
@@ -81,8 +89,13 @@ const appRouter = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/cart",
-        element: <Cart />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/cart",
+            element: <Cart />,
+          },
+        ],
       },
       {
         // :resId - dynamic value of restaurant id

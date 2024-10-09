@@ -26,10 +26,9 @@ const Login = () => {
     if (message === null) {
       try {
         await userSignIn(email.current.value, password.current.value);
+        navigate(routeFrom);
       } catch (error) {
         setError(error.message);
-      } finally {
-        navigate(routeFrom);
       }
     }
   };
@@ -44,13 +43,20 @@ const Login = () => {
 
     if (message === null) {
       try {
-        await userSignUp(email.current.value, password.current.value);
+        await userSignUp(
+          email.current.value,
+          password.current.value,
+          name.current.value
+        );
+        navigate(routeFrom);
       } catch (error) {
         setError(error.message);
-      } finally {
-        navigate(routeFrom);
       }
     }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -67,7 +73,7 @@ const Login = () => {
       </div>
       <div className="flex justify-center items-center w-1/2 h-full bg-green-300">
         <form
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
           className="bg-white w-96 px-10 py-5 shadow-lg rounded-3xl flex flex-col"
         >
           <h3 className="text-2xl font-semibold my-5">

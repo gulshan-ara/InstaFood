@@ -44,7 +44,7 @@ const Header = ({ isLoggedIn }) => {
           </li>
           <li className="px-5 py-4 font-medium text-lg  hover:text-green-800">
             <Link to="/cart">
-              Cart <sup>({cartData.length}) </sup>
+              Cart <sup>({isLoggedIn ? cartData.length : 0}) </sup>
             </Link>
           </li>
           <li className="px-5 py-4 font-medium text-lg  hover:text-green-800">
