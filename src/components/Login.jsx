@@ -3,6 +3,7 @@ import qrCode from "../assets/frame.png";
 import { validateInput } from "../utils/validateInput";
 import { userSignIn, userSignUp } from "../utils/firebaseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import Toaster from "./Toaster";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -13,6 +14,7 @@ const Login = () => {
   const name = useRef(null);
   const routeLocation = useLocation();
   const routeFrom = routeLocation.state?.from || "/";
+  const isToaster = routeLocation.state?.isToaster;
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
@@ -144,6 +146,7 @@ const Login = () => {
           )}
         </form>
       </div>
+      {isToaster && <Toaster message="Please Log In First." type="error" />}
     </div>
   );
 };

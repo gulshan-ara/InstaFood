@@ -55,6 +55,10 @@ const AppLayout = () => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log("I'm added")
+  }, [isLoggedIn]);
+
   return (
     <div className="app">
       {!isLoginPage && <Header isLoggedIn={isLoggedIn} />}

@@ -34,7 +34,7 @@ export const ItemCard = ({ item, isInCart }) => {
         setShowToaster(false);
       }, 3000);
     } else {
-      navigate("/login", { state: { from: "/cart" } });
+      navigate("/login", { state: { from: "/cart", isToaster: true } });
     }
   };
 
@@ -75,7 +75,7 @@ export const ItemCard = ({ item, isInCart }) => {
           </div>
         </div>
       </div>
-      {showToaster && <Toaster message={toasterMsg} />}
+      {showToaster && <Toaster message={toasterMsg} type={"success"} />}
     </div>
   );
 };
