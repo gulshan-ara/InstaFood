@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { addItem, removeItem } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
+import Toaster from "./Toaster";
 
 export const ItemCard = ({ item, isInCart }) => {
   const {
@@ -19,12 +21,18 @@ export const ItemCard = ({ item, isInCart }) => {
   const isAuthenticated = useSelector((state) => state.auth?.email) || null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showToaster, setShowToaster] = useState(false);
+  const [toasterMsg, setToasterMsg] = useState("");
 
   const handleAddItem = (item) => {
     // Dispatch an action
     dispatch(addItem(item));
     if (isAuthenticated) {
-      navigate("/cart");
+      setShowToaster(true);
+      setToasterMsg("Item added to Cart!!");
+      setTimeout(() => {
+        setShowToaster(false);
+      }, 3000);
     } else {
       navigate("/login", { state: { from: "/cart" } });
     }
@@ -67,6 +75,7 @@ export const ItemCard = ({ item, isInCart }) => {
           </div>
         </div>
       </div>
+      {showToaster && <Toaster message={toasterMsg} />}
     </div>
   );
 };
