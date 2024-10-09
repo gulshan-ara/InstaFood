@@ -1,6 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { addItem, removeItem } from "../redux/cartSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const ItemCard = ({ item, isInCart }) => {
   const {
@@ -15,7 +16,8 @@ export const ItemCard = ({ item, isInCart }) => {
     ? parseInt(price / 100)
     : parseInt(defaultPrice / 100);
   const itemImage = imageId ? imageId : cloudinaryImageId;
-
+  const isAuthenticated = useSelector((state) => state.auth?.email) || null;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleAddItem = (item) => {
@@ -25,7 +27,7 @@ export const ItemCard = ({ item, isInCart }) => {
 
   const handleRemoveItem = (item) => {
     dispatch(removeItem(item));
-  }
+  };
 
   return (
     <div className="bg-white shadow-lg my-4 p-4 rounded-lg">
@@ -47,7 +49,15 @@ export const ItemCard = ({ item, isInCart }) => {
               <button
                 className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
                 onClick={() => {
-                  handleAddItem(item);
+                  if (isAuthenticated) {
+                    handleAddItem(item);
+                    navigate("/cart");
+                  } else {
+                    handleAddItem(item);
+                    navigate("/login", {
+                      state: { from: "/cart" },
+                    });
+                  }
                 }}
               >
                 Add

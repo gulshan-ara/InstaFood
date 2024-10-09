@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import qrCode from "../assets/frame.png";
 import { validateInput } from "../utils/validateInput";
 import { userSignIn, userSignUp } from "../utils/firebaseAuth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -11,6 +11,8 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
+  const routeLocation = useLocation();
+  const routeFrom = routeLocation.state?.from || "/";
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
@@ -27,7 +29,7 @@ const Login = () => {
       } catch (error) {
         setError(error.message);
       } finally {
-        navigate("/");
+        navigate(routeFrom);
       }
     }
   };
