@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { addItem, removeItem } from "../redux/cartSlice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const ItemCard = ({ item, isInCart }) => {
   const {
@@ -23,6 +23,11 @@ export const ItemCard = ({ item, isInCart }) => {
   const handleAddItem = (item) => {
     // Dispatch an action
     dispatch(addItem(item));
+    if (isAuthenticated) {
+      navigate("/cart");
+    } else {
+      navigate("/login", { state: { from: "/cart" } });
+    }
   };
 
   const handleRemoveItem = (item) => {
@@ -49,15 +54,7 @@ export const ItemCard = ({ item, isInCart }) => {
               <button
                 className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
                 onClick={() => {
-                  if (isAuthenticated) {
-                    handleAddItem(item);
-                    navigate("/cart");
-                  } else {
-                    handleAddItem(item);
-                    navigate("/login", {
-                      state: { from: "/cart" },
-                    });
-                  }
+                  handleAddItem(item);
                 }}
               >
                 Add

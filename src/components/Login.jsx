@@ -47,6 +47,8 @@ const Login = () => {
         await userSignUp(email.current.value, password.current.value);
       } catch (error) {
         setError(error.message);
+      } finally {
+        navigate(routeFrom);
       }
     }
   };

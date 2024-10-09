@@ -23,20 +23,6 @@ const ResMenu = () => {
   return (
     <div className="m-10">
       <h1 className="text-3xl font-bold text-center">{resData.name}'s Menu</h1>
-      {/* <ul className="flex flex-row flex-wrap justify-center my-4">
-        {itemCards === undefined && <h4>Sorry, Nothing to serve now!</h4>}
-        {itemCards !== undefined &&
-          itemCards.map((item) => {
-            return (
-              <li
-                key={item.card.info.id}
-                className="w-48 mx-5 my-4 px-5 py-4 text-center rounded-lg shadow-xl font-medium text-base bg-violet-100"
-              >
-                {item.card.info.name}
-              </li>
-            );
-          })}
-      </ul> */}
       {categories.map((item, index) => {
         return (
           <ResCategory

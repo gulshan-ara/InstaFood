@@ -48,6 +48,20 @@ const RestaurantContainer = () => {
     }
   };
 
+  const handleSearchRest = () => {
+    const filteredR = listOfRestaurants.filter((res) =>
+      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredRestaurants(filteredR);
+  };
+
+  const handleTopRatedRest = () => {
+    const filteredRest = listOfRestaurants.filter(
+      (res) => res.info.avgRating > 4.4
+    );
+    setFilteredRestaurants(filteredRest);
+  };
+
   const onlineStatus = useOnlineStatus();
 
   if (onlineStatus === false) {
@@ -60,7 +74,9 @@ const RestaurantContainer = () => {
 
   if (loading) {
     return (
-      <div className="text-center text-xl my-10">Loading restaurants of {selectedCity}</div>
+      <div className="text-center text-xl my-10">
+        Loading restaurants of {selectedCity}
+      </div>
     );
   }
 
@@ -81,24 +97,14 @@ const RestaurantContainer = () => {
           />
           <button
             className="bg-blue-300 px-10 rounded-full h-12 font-semibold"
-            onClick={() => {
-              const filteredR = listOfRestaurants.filter((res) =>
-                res.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              setFilteredRestaurants(filteredR);
-            }}
+            onClick={handleSearchRest}
           >
             Search
           </button>
         </div>
         <button
           className="bg-lime-500 px-10 rounded-full h-12 font-semibold"
-          onClick={() => {
-            const filteredRest = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setFilteredRestaurants(filteredRest);
-          }}
+          onClick={handleTopRatedRest}
         >
           Top Rated Restaurants
         </button>
