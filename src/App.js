@@ -14,6 +14,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebaseConfig";
 import { addUser, removeUser } from "./redux/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { fetchCartList } from "./utils/firebaseAuth";
+import { addItemToCart, addMultipleItemsToCart } from "./redux/cartSlice";
 
 let RestaurantContainer = lazy(() =>
   import("../src/components/RestaurantContainer")
@@ -36,7 +38,7 @@ const AppLayout = () => {
   const isLoginPage = location.pathname === "/login";
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(
@@ -44,9 +46,12 @@ const AppLayout = () => {
             uid: uid,
             email: email,
             displayName: displayName,
-            isLoggedIn: isLoggedIn,
+            isLoggedIn: true,
           })
         );
+        const cartList = await fetchCartList(uid);
+        dispatch(addMultipleItemsToCart(cartList));
+
         setIsLoggedIn(true);
       } else {
         dispatch(removeUser());
@@ -54,10 +59,6 @@ const AppLayout = () => {
       }
     });
   }, []);
-
-  useEffect(() => {
-    console.log("I'm added")
-  }, [isLoggedIn]);
 
   return (
     <div className="app">

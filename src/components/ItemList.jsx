@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
-import { addItem, removeItem } from "../redux/cartSlice";
+import { addItemToCart, removeItem } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Toaster from "./Toaster";
+import { addToCart } from "../utils/firebaseAuth";
 
 export const ItemCard = ({ item, isInCart }) => {
   const {
@@ -19,15 +20,17 @@ export const ItemCard = ({ item, isInCart }) => {
     : parseInt(defaultPrice / 100);
   const itemImage = imageId ? imageId : cloudinaryImageId;
   const isAuthenticated = useSelector((state) => state.auth?.email) || null;
+  const uid = useSelector((state) => state.auth?.uid) || null;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showToaster, setShowToaster] = useState(false);
   const [toasterMsg, setToasterMsg] = useState("");
 
-  const handleAddItem = (item) => {
+  const handleAddItem = async (item) => {
     // Dispatch an action
-    dispatch(addItem(item));
+    dispatch(addItemToCart(item));
     if (isAuthenticated) {
+      await addToCart(item, uid);
       setShowToaster(true);
       setToasterMsg("Item added to Cart!!");
       setTimeout(() => {
@@ -61,8 +64,8 @@ export const ItemCard = ({ item, isInCart }) => {
             ) : (
               <button
                 className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
-                onClick={() => {
-                  handleAddItem(item);
+                onClick={async () => {
+                  await handleAddItem(item);
                 }}
               >
                 Add

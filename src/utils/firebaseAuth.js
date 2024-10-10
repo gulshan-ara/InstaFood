@@ -4,7 +4,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "./firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 
 export async function userSignUp(email, password, name) {
   try {
@@ -32,3 +32,34 @@ export async function userSignIn(email, password) {
 export async function userSignOut() {
   return await signOut(auth);
 }
+
+export async function addToCart(item, uid) {
+  const userRef = doc(collection(db, "users"), uid);
+  const cartRef = doc(collection(userRef, "cart"), item.card?.info?.id);
+
+  return await setDoc(cartRef, {
+    ...item,
+  });
+}
+
+export async function addToOrder() {}
+
+export async function fetchCartList(uid) {
+  const userRef = doc(collection(db, "users"), uid);
+  const cartRef = collection(userRef, "cart");
+
+  try {
+    const cartSnapshot = await getDocs(cartRef);
+    let cartItems = [];
+
+    cartSnapshot.forEach((doc) => {
+      cartItems.push({ id: doc.id, ...doc.data() });
+    });
+    return cartItems;
+  } catch (error) {
+    console.error("Error fetching cart items: ", error);
+    return [];
+  }
+}
+
+export async function fetchOrderList() {}
