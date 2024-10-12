@@ -78,7 +78,7 @@ export const ItemCard = ({ item, isInCart }) => {
               {isInCart ? (
                 <button
                   onClick={() => handleRemoveItem(item)}
-                  className="my-3 bg-orange-300 px-10 py-2 rounded-3xl font-medium"
+                  className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
                 >
                   Remove from Cart
                 </button>
@@ -87,12 +87,12 @@ export const ItemCard = ({ item, isInCart }) => {
                   onClick={async () => {
                     await handleAddItem(item);
                   }}
-                  className="my-3 bg-orange-300 px-10 py-2 rounded-3xl font-medium"
+                  className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
                 >
                   Add to Cart
                 </button>
               )}
-              <button className="my-3 bg-green-400 px-10 py-2 rounded-3xl font-medium">
+              <button className="w-full my-3 bg-green-400 py-2 rounded-3xl font-medium">
                 Order Now
               </button>
             </div>

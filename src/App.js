@@ -49,8 +49,10 @@ const AppLayout = () => {
             isLoggedIn: true,
           })
         );
-        const cartList = await fetchCartList(uid);
-        dispatch(addMultipleItemsToCart(cartList));
+        if (!isLoggedIn) {
+          const cartList = await fetchCartList(uid);
+          dispatch(addMultipleItemsToCart(cartList));
+        }
 
         setIsLoggedIn(true);
       } else {
@@ -58,7 +60,7 @@ const AppLayout = () => {
         setIsLoggedIn(false);
       }
     });
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className="app">
