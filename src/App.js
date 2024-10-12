@@ -15,7 +15,7 @@ import { auth } from "./utils/firebaseConfig";
 import { addUser, removeUser } from "./redux/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchCartList } from "./utils/firebaseAuth";
-import { addItemToCart, addMultipleItemsToCart } from "./redux/cartSlice";
+import { addMultipleItemsToCart } from "./redux/cartSlice";
 
 let RestaurantContainer = lazy(() =>
   import("../src/components/RestaurantContainer")

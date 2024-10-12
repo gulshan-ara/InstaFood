@@ -5,6 +5,7 @@ import { addItemToCart, removeItem } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import Toaster from "./Toaster";
 import { addToCart } from "../utils/firebaseAuth";
+import QuantityCounter from "./QuantityCounter";
 
 export const ItemCard = ({ item, isInCart }) => {
   const {
@@ -25,12 +26,17 @@ export const ItemCard = ({ item, isInCart }) => {
   const dispatch = useDispatch();
   const [showToaster, setShowToaster] = useState(false);
   const [toasterMsg, setToasterMsg] = useState("");
+  const [itemQuantity, setItemQuantity] = useState(item.quantity || 1);
 
   const handleAddItem = async (item) => {
+    const addedItemDetails = {
+      ...item,
+      quantity: itemQuantity || 1,
+    };
     // Dispatch an action
-    dispatch(addItemToCart(item));
+    dispatch(addItemToCart(addedItemDetails));
     if (isAuthenticated) {
-      await addToCart(item, uid);
+      await addToCart(addedItemDetails, uid);
       setShowToaster(true);
       setToasterMsg("Item added to Cart!!");
       setTimeout(() => {
@@ -53,28 +59,43 @@ export const ItemCard = ({ item, isInCart }) => {
           <div className="flex  flex-row justify-between">
             <span className="font-medium text-lg">{name}</span>
             {isInCart ? (
-              <button
-                className="bg-red-400 text-white px-4 rounded-full h-8 my-auto"
-                onClick={() => {
-                  handleRemoveItem(item);
-                }}
-              >
-                Remove
-              </button>
+              <p className="font-semibold text-gray-600">
+                {itemQuantity} x {itemPrice} ₹
+              </p>
             ) : (
-              <button
-                className="bg-green-400 text-white px-4 rounded-full h-8 my-auto"
-                onClick={async () => {
-                  await handleAddItem(item);
-                }}
-              >
-                Add
-              </button>
+              <p className="font-semibold text-gray-600">{itemPrice}₹</p>
             )}
           </div>
           <div>
-            <p className="font-semibold text-gray-600">{itemPrice}₹</p>
             <p className="text-gray-600">{description}</p>
+            {!isInCart && (
+              <QuantityCounter
+                quantity={itemQuantity}
+                setQuantity={setItemQuantity}
+              />
+            )}
+            <div className="flex flex-row gap-10">
+              {isInCart ? (
+                <button
+                  onClick={() => handleRemoveItem(item)}
+                  className="my-3 bg-orange-300 px-10 py-2 rounded-3xl font-medium"
+                >
+                  Remove from Cart
+                </button>
+              ) : (
+                <button
+                  onClick={async () => {
+                    await handleAddItem(item);
+                  }}
+                  className="my-3 bg-orange-300 px-10 py-2 rounded-3xl font-medium"
+                >
+                  Add to Cart
+                </button>
+              )}
+              <button className="my-3 bg-green-400 px-10 py-2 rounded-3xl font-medium">
+                Order Now
+              </button>
+            </div>
           </div>
         </div>
       </div>
