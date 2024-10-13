@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ItemCard } from "./ItemList";
+import ItemCard from "./ItemCard";
 import { clearCart } from "../redux/cartSlice";
 
 const Cart = () => {
@@ -33,6 +33,7 @@ const Cart = () => {
           Clear Cart
         </button>
       )}
+      {/* {showToaster && <Toaster message={toasterMsg} type={"success"}/>} */}
     </div>
   );
 };

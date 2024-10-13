@@ -4,7 +4,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "./firebaseConfig";
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { doc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
 
 export async function userSignUp(email, password, name) {
   try {
@@ -42,7 +42,21 @@ export async function addToCart(item, uid) {
   });
 }
 
-export async function addToOrder() {}
+export async function updateCartItem(item, uid) {
+  const userRef = doc(collection(db, "users"), uid);
+  const cartRef = doc(collection(userRef, "cart"), item.card?.info?.id);
+
+  return await updateDoc(cartRef, {
+    quantity: item.quantity,
+  });
+}
+
+export async function deleteCartItem(itemId, uid) {
+  const userRef = doc(collection(db, "users"), uid);
+  const cartRef = doc(collection(userRef, "cart"), itemId);
+
+  return await deleteDoc(cartRef);
+}
 
 export async function fetchCartList(uid) {
   const userRef = doc(collection(db, "users"), uid);
@@ -61,5 +75,7 @@ export async function fetchCartList(uid) {
     return [];
   }
 }
+
+export async function addToOrder() {}
 
 export async function fetchOrderList() {}
