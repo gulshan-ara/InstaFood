@@ -28,6 +28,7 @@ const ResMenu = () => {
           <ResCategory
             key={item.card?.card?.title}
             data={item.card?.card}
+            resID={resId}
             showItem={index === expandedItemIndex ? true : false}
             setExpandedItemIndex={() => setExpandedItemIndex(index)}
           />

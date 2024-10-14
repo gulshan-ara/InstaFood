@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import ItemCard from "./ItemCard";
 import Toaster from "./Toaster";
 import { useState } from "react";
 import { addItemToCart } from "../redux/cartSlice";
 import { addToCart } from "../utils/firebaseAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import MenuItemCard from "./MenuItemCard";
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, resId }) => {
   const [showToaster, setShowToaster] = useState(false);
   const [toasterMsg, setToasterMsg] = useState("");
   const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn) || false;
@@ -17,7 +17,6 @@ const ItemList = ({ items }) => {
   const handleAddItem = async (item) => {
     const addedItemDetails = {
       ...item,
-      quantity: item.quantity || 1,
     };
     dispatch(addItemToCart(addedItemDetails));
     if (isLoggedIn) {
@@ -28,7 +27,9 @@ const ItemList = ({ items }) => {
         setShowToaster(false);
       }, 3000);
     } else {
-      navigate("/login", { state: { from: "/cart", isToaster: true } });
+      navigate("/login", {
+        state: { from: `/restaurants/${resId}`, isToaster: true },
+      });
     }
   };
 
@@ -36,7 +37,7 @@ const ItemList = ({ items }) => {
     <div>
       {items.map((item) => {
         return (
-          <ItemCard
+          <MenuItemCard
             key={item.card.info.id}
             item={item}
             handleAddItem={() => handleAddItem(item)}

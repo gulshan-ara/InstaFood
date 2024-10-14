@@ -1,6 +1,6 @@
 import ItemList from "./ItemList";
 
-const ResCategory = ({ data, showItem, setExpandedItemIndex }) => {
+const ResCategory = ({ data, resID, showItem, setExpandedItemIndex }) => {
   // lifting state up and turning it into controlled component
   const handleClick = () => {
     setExpandedItemIndex();
@@ -14,7 +14,7 @@ const ResCategory = ({ data, showItem, setExpandedItemIndex }) => {
         </span>
         <span className="font-semibold text-lg text-black">⬇</span>
       </div>
-      {showItem && <ItemList items={data.itemCards} />}
+      {showItem && <ItemList items={data.itemCards} resId={resID}/>}
     </div>
   );
 };
