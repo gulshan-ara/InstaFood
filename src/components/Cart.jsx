@@ -1,13 +1,35 @@
 import { useDispatch, useSelector } from "react-redux";
-import ItemCard from "./ItemCard";
-import { clearCart } from "../redux/cartSlice";
+import CartItemCard from "./ItemCard";
+import { clearCart, removeItem } from "../redux/cartSlice";
+import { clearCartFromDb, deleteCartItem } from "../utils/firebaseAuth";
+import { useState } from "react";
+import Toaster from "./Toaster";
 
 const Cart = () => {
   const itemInCart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
+  const uid = useSelector((state) => state.auth?.uid);
+  const [showToaster, setShowToaster] = useState(false);
+  const [toasterMsg, setToasterMsg] = useState("");
 
-  const handleClearCart = () => {
+  const handleRemoveItem = async (item) => {
+    dispatch(removeItem(item));
+    await deleteCartItem(item.card.info.id, uid);
+    setShowToaster(true);
+    setToasterMsg("Item removed from cart.");
+    setTimeout(() => {
+      setShowToaster(false);
+    }, 3000);
+  };
+
+  const handleClearCart = async () => {
     dispatch(clearCart());
+    await clearCartFromDb(uid);
+    setShowToaster(true);
+    setToasterMsg("Cleared Cart.");
+    setTimeout(() => {
+      setShowToaster(false);
+    }, 3000);
   };
 
   return (
@@ -21,7 +43,11 @@ const Cart = () => {
       ) : (
         itemInCart.map((item) => {
           return (
-            <ItemCard key={item.card?.info?.id} item={item} isInCart={true} />
+            <CartItemCard
+              key={item.card?.info?.id}
+              item={item}
+              handleRemoveItem={handleRemoveItem}
+            />
           );
         })
       )}
@@ -33,7 +59,7 @@ const Cart = () => {
           Clear Cart
         </button>
       )}
-      {/* {showToaster && <Toaster message={toasterMsg} type={"success"}/>} */}
+      {showToaster && <Toaster message={toasterMsg} type={"success"} />}
     </div>
   );
 };

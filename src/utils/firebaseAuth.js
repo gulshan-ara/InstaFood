@@ -4,7 +4,14 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "./firebaseConfig";
-import { doc, setDoc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  updateDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 
 export async function userSignUp(email, password, name) {
   try {
@@ -56,6 +63,17 @@ export async function deleteCartItem(itemId, uid) {
   const cartRef = doc(collection(userRef, "cart"), itemId);
 
   return await deleteDoc(cartRef);
+}
+
+export async function clearCartFromDb(uid) {
+  const userRef = doc(collection(db, "users"), uid);
+  const cartRef = collection(userRef, "cart");
+
+  const cartDocs = await getDocs(cartRef);
+
+  const deletePromises = cartDocs.docs.map((doc) => deleteDoc(doc.ref));
+
+  return Promise.all(deletePromises);
 }
 
 export async function fetchCartList(uid) {

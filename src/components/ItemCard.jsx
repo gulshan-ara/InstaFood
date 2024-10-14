@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { CDN_URL } from "../utils/constants";
 import { removeItem } from "../redux/cartSlice";
-import QuantityCounter from "./QuantityCounter";
 
-const ItemCard = ({ item, isInCart, handleAddItem}) => {
+const CartItemCard = ({ item, handleRemoveItem }) => {
   const {
     name,
     description,
@@ -17,13 +16,8 @@ const ItemCard = ({ item, isInCart, handleAddItem}) => {
     ? parseInt(price / 100)
     : parseInt(defaultPrice / 100);
   const itemImage = imageId ? imageId : cloudinaryImageId;
-  const [itemQuantity, setItemQuantity] = useState(item.quantity || 1);
+  const itemQuantity = item.quantity;
   const dispatch = useDispatch();
-
-
-  const handleRemoveItem = (item) => {
-    dispatch(removeItem(item));
-  };
 
   return (
     <div className="bg-white shadow-lg my-4 p-4 rounded-lg">
@@ -32,40 +26,20 @@ const ItemCard = ({ item, isInCart, handleAddItem}) => {
         <div className="mx-4 flex-1">
           <div className="flex  flex-row justify-between">
             <span className="font-medium text-lg">{name}</span>
-            {isInCart ? (
-              <p className="font-semibold text-gray-600">
-                {itemQuantity} x {itemPrice} ₹
-              </p>
-            ) : (
-              <p className="font-semibold text-gray-600">{itemPrice}₹</p>
-            )}
+            <p className="font-semibold text-gray-600">
+              {itemQuantity} x {itemPrice} ₹
+            </p>
           </div>
           <div>
             <p className="text-gray-600">{description}</p>
-            {!isInCart && (
-              <QuantityCounter
-                quantity={itemQuantity}
-                setQuantity={setItemQuantity}
-              />
-            )}
             <div className="flex flex-row gap-10">
-              {isInCart ? (
-                <button
-                  onClick={() => handleRemoveItem(item)}
-                  className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
-                >
-                  Remove from Cart
-                </button>
-              ) : (
-                <button
-                  onClick={async () => {
-                    await handleAddItem(item);
-                  }}
-                  className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
-                >
-                  Add to Cart
-                </button>
-              )}
+              <button
+                onClick={() => handleRemoveItem(item)}
+                className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
+              >
+                Remove from Cart
+              </button>
+
               <button className="w-full my-3 bg-green-400 py-2 rounded-3xl font-medium">
                 Order Now
               </button>
@@ -77,4 +51,4 @@ const ItemCard = ({ item, isInCart, handleAddItem}) => {
   );
 };
 
-export default ItemCard;
+export default CartItemCard;

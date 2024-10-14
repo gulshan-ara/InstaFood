@@ -3,7 +3,7 @@ import Toaster from "./Toaster";
 import { useState } from "react";
 import { addItemToCart } from "../redux/cartSlice";
 import { addToCart } from "../utils/firebaseAuth";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MenuItemCard from "./MenuItemCard";
 
 const ItemList = ({ items, resId }) => {
@@ -14,13 +14,14 @@ const ItemList = ({ items, resId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleAddItem = async (item) => {
+  const handleAddItem = async (item, quantity) => {
     const addedItemDetails = {
       ...item,
+      quantity,
     };
     dispatch(addItemToCart(addedItemDetails));
     if (isLoggedIn) {
-      await addToCart(item, uid);
+      await addToCart(addedItemDetails, uid);
       setShowToaster(true);
       setToasterMsg("Item added to cart successfully!!");
       setTimeout(() => {
@@ -40,7 +41,7 @@ const ItemList = ({ items, resId }) => {
           <MenuItemCard
             key={item.card.info.id}
             item={item}
-            handleAddItem={() => handleAddItem(item)}
+            handleAddItem={handleAddItem}
           />
         );
       })}
