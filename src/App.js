@@ -116,7 +116,7 @@ const appRouter = createBrowserRouter([
             element: <CheckoutForm />,
           },
           {
-            path: "complete/*",
+            path: "complete",
             element: <CompletePage />,
           },
         ],
