@@ -16,6 +16,9 @@ import { addUser, removeUser } from "./redux/authSlice";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchCartList } from "./utils/firebaseAuth";
 import { addMultipleItemsToCart } from "./redux/cartSlice";
+import OrderForm from "./components/OrderForm";
+import CompletePage from "./components/PaymentComplete";
+import CheckoutForm from "./components/CheckoutForm";
 
 let RestaurantContainer = lazy(() =>
   import("../src/components/RestaurantContainer")
@@ -101,6 +104,20 @@ const appRouter = createBrowserRouter([
           {
             path: "/cart",
             element: <Cart />,
+          },
+        ],
+      },
+      {
+        path: "/order/*",
+        element: <OrderForm />,
+        children: [
+          {
+            path: "", 
+            element: <CheckoutForm />,
+          },
+          {
+            path: "complete/*",
+            element: <CompletePage />,
           },
         ],
       },

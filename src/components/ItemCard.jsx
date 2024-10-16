@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
-import { loadStripe } from "@stripe/stripe-js";
+import { useNavigate } from "react-router-dom";
 
 const CartItemCard = ({ item, handleRemoveItem }) => {
   const {
@@ -17,53 +17,9 @@ const CartItemCard = ({ item, handleRemoveItem }) => {
     : parseInt(defaultPrice / 100);
   const itemImage = imageId ? imageId : cloudinaryImageId;
   const itemQuantity = item.quantity;
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart.items);
 
-  const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51Q9LFLG4lHquzSiu9jP4BVu47JR7rrfS76Xzzbp9bqDRQGDUcBs9Eh4OckzGESe7MS0m16jNTm891uiE9iRITH2B00VTiW0a8x"
-    );
-
-    const body = {
-      products: cart,
-    };
-
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:3000/create_checkout_session",
-        {
-          method: "POST",
-          headers: headers,
-          body: JSON.stringify(body),
-        }
-      );
-
-      // Check if response is successful
-      if (!response.ok) {
-        const errorDetails = await response.json(); // You might want to log the error details
-        console.error("Failed to create checkout session:", errorDetails);
-        return; // Exit early if the fetch fails
-      }
-
-      const session = await response.json();
-
-      const result = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (result.error) {
-        console.log(result.error); // Log any Stripe redirect errors
-      }
-    } catch (error) {
-      console.error("An error occurred while making the payment:", error);
-    }
-  };
-
+  const navigate = useNavigate();
+  
   return (
     <div className="bg-white shadow-lg my-4 p-4 rounded-lg">
       <div className="flex flex-row justify-between">
@@ -86,7 +42,7 @@ const CartItemCard = ({ item, handleRemoveItem }) => {
               </button>
 
               <button
-                onClick={makePayment}
+                onClick={() => navigate("/order")}
                 className="w-full my-3 bg-green-400 py-2 rounded-3xl font-medium"
               >
                 Order Now
