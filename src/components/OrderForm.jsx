@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet,
-} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51Q9LFLG4lHquzSiu9jP4BVu47JR7rrfS76Xzzbp9bqDRQGDUcBs9Eh4OckzGESe7MS0m16jNTm891uiE9iRITH2B00VTiW0a8x"
 );
 
 const OrderForm = () => {
-  const cart = useSelector((state) => state.cart.items);
+  // const orderTotal = useSelector((state) => state.cart.orderTotal);
+  const orderTotal = JSON.parse(localStorage.getItem("orderTotal"));
+  console.log(orderTotal);
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -22,7 +19,7 @@ const OrderForm = () => {
     fetch("https://insta-food-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart }),
+      body: JSON.stringify({ totalAmount: orderTotal }),
     })
       .then((res) => {
         // Check if the response is ok and has content
@@ -42,7 +39,7 @@ const OrderForm = () => {
       .catch((error) => {
         console.error("Error fetching PaymentIntent:", error);
       });
-  }, [cart]); // Added `cart` as a dependency if `cart` can change
+  }, [orderTotal]); // Added `cart` as a dependency if `cart` can change
 
   const loader = "auto";
 

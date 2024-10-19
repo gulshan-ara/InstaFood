@@ -1,9 +1,6 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { CDN_URL } from "../utils/constants";
-import { useNavigate } from "react-router-dom";
 
-const CartItemCard = ({ item, handleRemoveItem }) => {
+const CartItemCard = ({ item, handleRemoveItem, handleOrder, isSelected }) => {
   const {
     name,
     description,
@@ -18,8 +15,6 @@ const CartItemCard = ({ item, handleRemoveItem }) => {
   const itemImage = imageId ? imageId : cloudinaryImageId;
   const itemQuantity = item.quantity;
 
-  const navigate = useNavigate();
-  
   return (
     <div className="bg-white shadow-lg my-4 p-4 rounded-lg">
       <div className="flex flex-row justify-between">
@@ -41,12 +36,21 @@ const CartItemCard = ({ item, handleRemoveItem }) => {
                 Remove from Cart
               </button>
 
-              <button
-                onClick={() => navigate("/order")}
-                className="w-full my-3 bg-green-400 py-2 rounded-3xl font-medium"
-              >
-                Order Now
-              </button>
+              {isSelected ? (
+                <button
+                  onClick={() => handleOrder(item)}
+                  className="w-full my-3 bg-orange-300 py-2 rounded-3xl font-medium"
+                >
+                  Remove from Order
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleOrder(item)}
+                  className="w-full my-3 bg-green-300 py-2 rounded-3xl font-medium"
+                >
+                  Order Now
+                </button>
+              )}
             </div>
           </div>
         </div>
