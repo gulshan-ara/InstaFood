@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import qrCode from "../assets/frame.png";
 import { validateInput } from "../utils/validateInput";
 import { userSignIn, userSignUp } from "../utils/firebaseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
-import Toaster from "./Toaster";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -16,6 +17,12 @@ const Login = () => {
   const routeFrom = routeLocation.state?.from || "/";
   const isToaster = routeLocation.state?.isToaster;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(isToaster){
+      toast.error("Please sign in to continue");
+    }
+  }, [isToaster]);
 
   const handleSignIn = async () => {
     const message = validateInput(email.current.value, password.current.value);
@@ -146,7 +153,7 @@ const Login = () => {
           )}
         </form>
       </div>
-      {isToaster && <Toaster message="Please Log In First." type="error" />}
+      {isToaster && <ToastContainer/>}
     </div>
   );
 };

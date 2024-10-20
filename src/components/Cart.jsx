@@ -1,41 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import CartItemCard from "./ItemCard";
-import { addOrderTotal, clearCart, removeItem } from "../redux/cartSlice";
+import { clearCart, removeItem } from "../redux/cartSlice";
 import { clearCartFromDb, deleteCartItem } from "../utils/firebaseAuth";
 import { useState } from "react";
-import Toaster from "./Toaster";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const itemInCart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const uid = useSelector((state) => state.auth?.uid);
-  const [showToaster, setShowToaster] = useState(false);
-  const [toasterMsg, setToasterMsg] = useState("");
-  const [toasterType, setToasterType] = useState(null);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleRemoveItem = async (item) => {
     dispatch(removeItem(item));
     await deleteCartItem(item.card.info.id, uid);
-    setShowToaster(true);
-    setToasterType(null);
-    setToasterMsg("Item removed from cart.");
-    setTimeout(() => {
-      setShowToaster(false);
-    }, 3000);
+    toast.error("Item removed from cart.");
   };
 
   const handleClearCart = async () => {
     dispatch(clearCart());
     await clearCartFromDb(uid);
-    setShowToaster(true);
-    setToasterType(null);
-    setToasterMsg("Cleared Cart.");
-    setTimeout(() => {
-      setShowToaster(false);
-    }, 3000);
+    toast.error("Cart cleared.");
   };
 
   const handleToggleOrder = (item) => {
@@ -50,19 +38,12 @@ const Cart = () => {
           (selectedItem) => selectedItem.card.info.id !== item.card.info.id
         )
       );
-      setToasterType(null);
-      setToasterMsg("Item removed from order.");
+      toast.error("Item removed from order.");
     } else {
       // Add item to selectedItems
       setSelectedItems((prevItems) => [...prevItems, item]);
-      setToasterMsg("Item added to order.");
-      setToasterType("success");
+      toast.success("Item added to order.");
     }
-
-    setShowToaster(true);
-    setTimeout(() => {
-      setShowToaster(false);
-    }, 3000);
   };
 
   const subTotal = (items) => {
@@ -79,9 +60,7 @@ const Cart = () => {
 
   const handleProceed = () => {
     if (selectedItems.length === 0) {
-      setShowToaster(true);
-      setToasterType(null);
-      setToasterMsg("No items selected.");
+      toast.error("No item selected yet.")
     } else {
       localStorage.setItem(
         "orderTotal",
@@ -152,7 +131,7 @@ const Cart = () => {
           </div>
         </div>
       )}
-      {showToaster && <Toaster message={toasterMsg} type={toasterType} />}
+      <ToastContainer />
     </div>
   );
 };

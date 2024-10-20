@@ -27,7 +27,8 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "https://instafood-nine.vercel.app/order/complete",
+        // return_url: "https://instafood-nine.vercel.app/order/complete",
+        return_url: "http://localhost:1234/order/complete",
       },
     });
 

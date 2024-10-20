@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import Toaster from "./Toaster";
-import { useState } from "react";
 import { addItemToCart } from "../redux/cartSlice";
 import { addToCart } from "../utils/firebaseAuth";
 import { useNavigate } from "react-router-dom";
 import MenuItemCard from "./MenuItemCard";
+import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ItemList = ({ items, resId }) => {
-  const [showToaster, setShowToaster] = useState(false);
-  const [toasterMsg, setToasterMsg] = useState("");
   const isLoggedIn = useSelector((state) => state.auth?.isLoggedIn) || false;
   const uid = useSelector((state) => state.auth?.uid) || null;
   const dispatch = useDispatch();
@@ -22,11 +21,7 @@ const ItemList = ({ items, resId }) => {
     dispatch(addItemToCart(addedItemDetails));
     if (isLoggedIn) {
       await addToCart(addedItemDetails, uid);
-      setShowToaster(true);
-      setToasterMsg("Item added to cart successfully!!");
-      setTimeout(() => {
-        setShowToaster(false);
-      }, 3000);
+      toast.success("Item added to cart.");
     } else {
       navigate("/login", {
         state: { from: `/restaurants/${resId}`, isToaster: true },
@@ -45,7 +40,7 @@ const ItemList = ({ items, resId }) => {
           />
         );
       })}
-      {showToaster && <Toaster message={toasterMsg} type={"success"} />}
+      <ToastContainer />
     </div>
   );
 };

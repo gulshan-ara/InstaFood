@@ -11,12 +11,12 @@ const stripePromise = loadStripe(
 const OrderForm = () => {
   // const orderTotal = useSelector((state) => state.cart.orderTotal);
   const orderTotal = JSON.parse(localStorage.getItem("orderTotal"));
-  console.log(orderTotal);
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("https://insta-food-server.vercel.app/create-payment-intent", {
+    // fetch("https://insta-food-server.vercel.app/create-payment-intent", {
+    fetch("http://localhost:4242/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ totalAmount: orderTotal }),
@@ -39,7 +39,7 @@ const OrderForm = () => {
       .catch((error) => {
         console.error("Error fetching PaymentIntent:", error);
       });
-  }, [orderTotal]); // Added `cart` as a dependency if `cart` can change
+  }, [orderTotal]);
 
   const loader = "auto";
 
