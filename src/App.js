@@ -111,19 +111,19 @@ const appRouter = createBrowserRouter([
             path: "/cart",
             element: <Cart />,
           },
+        ],
+      },
+      {
+        path: "/order/*",
+        element: <OrderForm />,
+        children: [
           {
-            path: "/order/*",
-            element: <OrderForm />,
-            children: [
-              {
-                path: "",
-                element: <CheckoutForm />,
-              },
-              {
-                path: "complete",
-                element: <CompletePage />,
-              },
-            ],
+            path: "",
+            element: <CheckoutForm />,
+          },
+          {
+            path: "complete",
+            element: <CompletePage />,
           },
         ],
       },
