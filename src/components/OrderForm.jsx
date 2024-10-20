@@ -44,7 +44,7 @@ const OrderForm = () => {
   const loader = "auto";
 
   return (
-    <div>
+    <div className="h-4/6">
       {clientSecret && (
         <Elements options={{ clientSecret, loader }} stripe={stripePromise}>
           <Outlet />

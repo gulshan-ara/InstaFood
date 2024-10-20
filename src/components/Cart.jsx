@@ -71,7 +71,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="px-auto">
+    <div className="px-auto my-10">
       {itemInCart.length === 0 && (
         <div>
           <p className="text-center font-semibold">

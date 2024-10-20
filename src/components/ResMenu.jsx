@@ -21,7 +21,7 @@ const ResMenu = () => {
   );
 
   return (
-    <div className="m-10">
+    <div className="m-10 flex flex-col flex-grow">
       <h1 className="text-3xl font-bold text-center">{resData.name}'s Menu</h1>
       {categories.map((item, index) => {
         return (

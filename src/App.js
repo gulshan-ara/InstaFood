@@ -1,30 +1,31 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import Header from "./components/Header";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Contact from "./components/Contact";
+import appStore from "./redux/appStore";
+import Header from "./components/Header";
+import OrderForm from "./components/OrderForm";
+import CompletePage from "./components/PaymentComplete";
+import CheckoutForm from "./components/CheckoutForm";
 import Error from "./components/Error";
 import ResMenu from "./components/ResMenu";
-import { Provider, useDispatch } from "react-redux";
-import appStore from "./redux/appStore";
 import Cart from "./components/Cart";
 import ShimmerUI from "./components/Shimmer";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Provider, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utils/firebaseConfig";
 import { addUser, removeUser } from "./redux/authSlice";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { fetchCartList } from "./utils/firebaseAuth";
 import { addMultipleItemsToCart } from "./redux/cartSlice";
-import OrderForm from "./components/OrderForm";
-import CompletePage from "./components/PaymentComplete";
-import CheckoutForm from "./components/CheckoutForm";
+import Footer from "./components/Footer";
 
 let RestaurantContainer = lazy(() =>
   import("../src/components/RestaurantContainer")
 );
 let About = lazy(() => import("../src/components/About"));
 let Login = lazy(() => import("../src/components/Login"));
+let Contact = lazy(() => import("../src/components/Contact"));
 
 const Root = () => {
   return (
@@ -66,9 +67,10 @@ const AppLayout = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="app">
+    <div className="h-screen">
       {!isLoginPage && <Header isLoggedIn={isLoggedIn} />}
       <Outlet />
+      <Footer/>
     </div>
   );
 };
@@ -96,7 +98,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/contact",
-        element: <Contact />,
+        element: (
+          <Suspense fallback={<ShimmerUI />}>
+            <Contact />
+          </Suspense>
+        ),
       },
       {
         element: <ProtectedRoute />,
@@ -105,19 +111,19 @@ const appRouter = createBrowserRouter([
             path: "/cart",
             element: <Cart />,
           },
-        ],
-      },
-      {
-        path: "/order/*",
-        element: <OrderForm />,
-        children: [
           {
-            path: "", 
-            element: <CheckoutForm />,
-          },
-          {
-            path: "complete",
-            element: <CompletePage />,
+            path: "/order/*",
+            element: <OrderForm />,
+            children: [
+              {
+                path: "",
+                element: <CheckoutForm />,
+              },
+              {
+                path: "complete",
+                element: <CompletePage />,
+              },
+            ],
           },
         ],
       },

@@ -1,9 +1,7 @@
-import User from "./User";
-
 const About = () => {
   return (
     <div>
-      <User />
+      ABout us page coming soon
     </div>
   );
 };

@@ -66,7 +66,7 @@ const RestaurantContainer = () => {
 
   if (onlineStatus === false) {
     return (
-      <p className="text-center my-10 font-medium">
+      <p className="text-center my-10 font-medium h-4/6">
         Please check your internet connection!
       </p>
     );
@@ -74,7 +74,7 @@ const RestaurantContainer = () => {
 
   if (loading) {
     return (
-      <div className="text-center text-xl my-10">
+      <div className="text-center text-xl my-10 h-4/6">
         Loading restaurants of {selectedCity}
       </div>
     );
@@ -86,7 +86,7 @@ const RestaurantContainer = () => {
   }
 
   return (
-    <div className="mx-10">
+    <div className="mx-10 flex flex-col flex-grow">
       <div className="flex justify-between m-10">
         <div className="flex justify-between">
           <input
