@@ -20,9 +20,7 @@ const About = () => {
 
       <p>
         Special Thanks to <strong>Akshay Saini</strong> &{" "}
-        <a className="text-base font-semibold" href="namastedev.com">
-          NamasteDev
-        </a>{" "}
+        <strong>namastedev.com</strong>{" "}
         for such amazing explanations of React & Javascript.
       </p>
     </div>
