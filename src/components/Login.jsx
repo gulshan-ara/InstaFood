@@ -5,6 +5,7 @@ import { userSignIn, userSignUp } from "../utils/firebaseAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from "react-redux";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -17,6 +18,11 @@ const Login = () => {
   const routeFrom = routeLocation.state?.from || "/";
   const isToaster = routeLocation.state?.isToaster;
   const navigate = useNavigate();
+  const isLoggedIn = useSelector(state => state.auth?.isLoggedIn);
+
+  if(isLoggedIn){
+    navigate("/cart");
+  }
 
   useEffect(() => {
     if(isToaster){

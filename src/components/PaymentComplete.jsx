@@ -153,7 +153,10 @@ export default function CompletePage() {
           )}
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
-            onClick={() => navigate("/")}
+            onClick={() => {
+              localStorage.removeItem("orderTotal");
+              navigate("/");
+            }}
           >
             Back to Home
           </button>

@@ -110,16 +110,16 @@ const Cart = () => {
             <h3 className="text-lg font-semibold">Order Summary</h3>
             <div className="flex flex-row justify-between my-2">
               <p>Subtotal ({selectedItems.length} items)</p>
-              <p className="text-base font-medium">{subTotal(selectedItems)}</p>
+              <p className="text-base font-medium">{subTotal(selectedItems)}₹</p>
             </div>
             <div className="flex flex-row justify-between my-2">
               <p>Shipping fee</p>
-              <p className="text-base font-medium">80</p>
+              <p className="text-base font-medium">80₹</p>
             </div>
             <div className="flex flex-row justify-between my-2">
               <p>Total</p>
               <p className="text-base font-medium">
-                {subTotal(selectedItems) + 80}
+                {subTotal(selectedItems) + 80}₹
               </p>
             </div>
             <button
