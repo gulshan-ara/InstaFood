@@ -4,12 +4,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -27,8 +27,8 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        // return_url: "https://instafood-nine.vercel.app/order/complete",
-        return_url: "http://localhost:1234/order/complete",
+        return_url: "https://instafood-nine.vercel.app/order/complete",
+        // return_url: "http://localhost:1234/order/complete",
       },
     });
 
@@ -38,9 +38,9 @@ export default function CheckoutForm() {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+      toast.error(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     }
 
     setIsLoading(false);
@@ -51,28 +51,34 @@ export default function CheckoutForm() {
   };
 
   return (
-    <>
-      <form id="payment-form" onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto my-8">
+      <form
+        id="payment-form"
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-lg shadow-lg"
+      >
         <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
+        <button
+          disabled={isLoading || !stripe || !elements}
+          id="submit"
+          className={`mt-4 w-full bg-blue-600 text-white font-bold py-2 px-4 rounded 
+        hover:bg-blue-700 transition-colors duration-300 
+        ${
+          isLoading || !stripe || !elements
+            ? "opacity-50 cursor-not-allowed"
+            : ""
+        }`}
+        >
           <span id="button-text">
             {isLoading ? (
-              <div className="spinner" id="spinner"></div>
+              <div className="spinner border-t-transparent border-4 border-white rounded-full w-6 h-6 mx-auto animate-spin"></div>
             ) : (
               "Pay now"
             )}
           </span>
         </button>
-        {/* Show any error or success messages */}
-        {message && <div id="payment-message">{message}</div>}
+        <ToastContainer />
       </form>
-      {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
-      {/* <div id="dpm-annotation">
-        <p>
-          Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-          <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">Preview payment methods by transaction</a>
-        </p>
-      </div> */}
-    </>
+    </div>
   );
 }
